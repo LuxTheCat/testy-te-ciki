@@ -35,29 +35,4 @@ public class bounds : MonoBehaviour
         };
     }
 
-    public void Update()
-    {
-<<<<<<< HEAD
-      
-    }
-
 }
-=======
-        Debug.Log(Scale.xScale);
-        /*  
-            Debug.Log(x1.transform.position);
-            Debug.Log(x2.transform.position);
-            Debug.Log(x3.transform.position);
-            Debug.Log(x4.transform.position);
-            Debug.Log(y1.transform.position);
-            Debug.Log(y2.transform.position);
-            Debug.Log(y3.transform.position);
-            Debug.Log(y4.transform.position);
-        */
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-    }
-}
->>>>>>> f6d5adcf7cb172d334c1a5923d6601c9349b23d7
