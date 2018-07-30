@@ -1,0 +1,20 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class s : MonoBehaviour {
+
+	public struct test ()
+	{
+		int a;
+		float b;
+		string c;
+
+		public  test()
+		{
+			a = 1;
+			b = 2;
+			c = "ha";
+		}
+	}
+}
