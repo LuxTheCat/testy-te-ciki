@@ -19,14 +19,12 @@ public class colisinfo : MonoBehaviour
 
             Debug.Log(other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position));
 
-<<<<<<< HEAD
             var scianka = other.gameObject.transform.parent.transform.parent;
 
 
             scianka.GetComponent<bounds>().Scale.xScale = scianka.transform.localScale.x;
             scianka.GetComponent<bounds>().Scale.yScale = scianka.transform.localScale.y;
             scianka.GetComponent<bounds>().Scale.zScale = scianka.transform.localScale.z;
-=======
 
             //Używane są 4 ścianki w 2D ale może w przyszłości przeniosę do 3D
 
