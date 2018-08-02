@@ -46,18 +46,16 @@ public class colisinfo : MonoBehaviour
                 }
 
 
-                /**
-                                if (other == scianka.GetComponent<bounds>().y2)
-                                {
-                                    scianka.transform.localScale = new Vector3(1, (float)0.5, 1);
-                                }
+        
+                if (other.name == scianka.GetComponent<bounds>().y2.name)
+                {
+                    SpawnNewKlocekY(other, scianka, pos, collisionPoint);
+                }
 
-                                if (other == scianka.GetComponent<bounds>().y4)
-                                {
-                                    scianka.transform.localScale = new Vector3(1, (float)0.5, 1);
-                                }
-                **/
-
+                if (other.name == scianka.GetComponent<bounds>().y4.name)
+                {
+                    SpawnNewKlocekY(other, scianka, pos, collisionPoint);
+                }
                 /**
                  * All 6 sides would be usefull when cutting in 3D
                  * 
@@ -119,10 +117,10 @@ public class colisinfo : MonoBehaviour
         Vector3 CutPosition = new Vector3(transform.position.x, pos.y, pos.z);
 
 
-        GameObject praweNowa = Instantiate(other.gameObject.transform.parent.gameObject, new Vector3((rightPoint.x + CutPosition.x) / 2, scianka.position.y, scianka.position.z), Quaternion.identity);
+        GameObject praweNowa = Instantiate(other.gameObject.transform.parent.gameObject, new Vector3(scianka.position.x, (rightPoint.y + CutPosition.x) / 2, scianka.position.z), Quaternion.identity);
         float prawyDistance = (Vector3.Distance(CutPosition, rightPoint));
 
-        praweNowa.transform.localScale = new Vector3(prawyDistance, scianka.transform.localScale.y, scianka.transform.localScale.z);
+        praweNowa.transform.localScale = new Vector3(scianka.transform.localScale.x, prawyDistance, scianka.transform.localScale.z);
 
 
 
