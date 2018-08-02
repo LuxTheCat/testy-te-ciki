@@ -37,13 +37,12 @@ public class colisinfo : MonoBehaviour
 
                 if (other.name == scianka.GetComponent<bounds>().x1.name)
                 {
-
-                    SpawnNewKlocek(other, scianka, pos, collisionPoint);
+                    SpawnNewKlocekX(other, scianka, pos, collisionPoint);
                 }
 
                 if (other.name == scianka.GetComponent<bounds>().x2.name)
                 {
-                    SpawnNewKlocek(other, scianka, pos, collisionPoint);
+                    SpawnNewKlocekX(other, scianka, pos, collisionPoint);
                 }
 
 
@@ -76,7 +75,39 @@ public class colisinfo : MonoBehaviour
         else
             Debug.Log("To nie scianka");
     }
-    public void SpawnNewKlocek(Collider other, Transform scianka, Vector3 pos, Vector3 collisionPoint)
+    public void SpawnNewKlocekX(Collider other, Transform scianka, Vector3 pos, Vector3 collisionPoint)
+    {
+
+        Debug.Log(other.name);
+        // scianka.transform.localScale = new Vector3( scianka.transform.localScale.x/2, scianka.transform.localScale.y, scianka.transform.localScale.z);
+
+        Vector3 leftPoint = scianka.position - (Vector3.right * scianka.transform.localScale.x / 2);
+        Vector3 rightPoint = scianka.position + (Vector3.right * scianka.transform.localScale.x / 2);
+
+        Vector3 CutPosition = new Vector3(transform.position.x, pos.y, pos.z);
+
+
+        GameObject praweNowa = Instantiate(other.gameObject.transform.parent.gameObject, new Vector3((rightPoint.x + CutPosition.x)/2, scianka.position.y, scianka.position.z), Quaternion.identity);
+        float prawyDistance = (Vector3.Distance(CutPosition, rightPoint));
+
+        praweNowa.transform.localScale = new Vector3(prawyDistance, scianka.transform.localScale.y, scianka.transform.localScale.z);
+
+
+
+        GameObject leweNowa = Instantiate(other.gameObject.transform.parent.gameObject, new Vector3((leftPoint.x + CutPosition.x)/2, scianka.position.y, scianka.position.z), Quaternion.identity);
+        float lewyDistance = (Vector3.Distance(CutPosition, leftPoint)) ;
+
+        leweNowa.transform.localScale = new Vector3(lewyDistance, scianka.transform.localScale.y, scianka.transform.localScale.z);
+
+
+
+        Interacted.Add(praweNowa.name);
+        Interacted.Add(leweNowa.name);
+
+        Destroy(other.gameObject.transform.parent.gameObject);
+    }
+
+    public void SpawnNewKlocekY(Collider other, Transform scianka, Vector3 pos, Vector3 collisionPoint)
     {
 
         Debug.Log(other.name);
@@ -88,15 +119,15 @@ public class colisinfo : MonoBehaviour
         Vector3 CutPosition = new Vector3(transform.position.x, pos.y, pos.z);
 
 
-        GameObject praweNowa = Instantiate(other.gameObject.transform.parent.gameObject, new Vector3(rightPoint.x, scianka.position.y, scianka.position.z), Quaternion.identity);
+        GameObject praweNowa = Instantiate(other.gameObject.transform.parent.gameObject, new Vector3((rightPoint.x + CutPosition.x) / 2, scianka.position.y, scianka.position.z), Quaternion.identity);
         float prawyDistance = (Vector3.Distance(CutPosition, rightPoint));
 
         praweNowa.transform.localScale = new Vector3(prawyDistance, scianka.transform.localScale.y, scianka.transform.localScale.z);
 
 
 
-        GameObject leweNowa = Instantiate(other.gameObject.transform.parent.gameObject, new Vector3(leftPoint.x, scianka.position.y, scianka.position.z), Quaternion.identity);
-        float lewyDistance = (Vector3.Distance(CutPosition, leftPoint)) ;
+        GameObject leweNowa = Instantiate(other.gameObject.transform.parent.gameObject, new Vector3((leftPoint.x + CutPosition.x) / 2, scianka.position.y, scianka.position.z), Quaternion.identity);
+        float lewyDistance = (Vector3.Distance(CutPosition, leftPoint));
 
         leweNowa.transform.localScale = new Vector3(lewyDistance, scianka.transform.localScale.y, scianka.transform.localScale.z);
 
