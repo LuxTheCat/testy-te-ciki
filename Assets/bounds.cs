@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class bounds : MonoBehaviour
 {
-    public Renderer rend;
-
     public GameObject x1;
     public GameObject x2;
 
@@ -15,8 +13,6 @@ public class bounds : MonoBehaviour
     public GameObject y4;
 
     public BoxScale Scale;
-
-    public float skalaX;
 
     public struct BoxScale
     {
