@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class colisinfo : MonoBehaviour
+public class CutTheCube : MonoBehaviour
 {
+    private ExtremePointsAndList EPAL;
 
-    public List<string> Interacted = new List<string>();
+    public void Start()
+    {
+        EPAL = new ExtremePointsAndList();
+    }
 
     public void OnTriggerEnter(Collider other)
     {
@@ -13,13 +17,11 @@ public class colisinfo : MonoBehaviour
         {
             Debug.Log(other.tag);
             // if the cube has interacted with the cutter it won't be interacting second time with the same one
-            if (Interacted.Contains(other.gameObject.transform.parent.name))
-                Debug.Log("Było już");
-            else
+            if (!EPAL.Interacted.Contains(other.gameObject.transform.parent.name))
             {
-                Interacted.Add(other.gameObject.transform.parent.name);
+                EPAL.Interacted.Add(other.gameObject.transform.parent.name);
 
-                var collisionPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+                Vector3 collisionPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
 
                 var scianka = other.gameObject.transform.parent;
 
@@ -84,9 +86,7 @@ public class colisinfo : MonoBehaviour
         leweNowa.transform.localScale = new Vector3(lewyDistance, scianka.transform.localScale.y, scianka.transform.localScale.z);
 
 
-
-        Interacted.Add(praweNowa.name);
-        Interacted.Add(leweNowa.name);
+        AddToList(praweNowa.name, leweNowa.name, EPAL.Interacted);
 
         Destroy(other.gameObject.transform.parent.gameObject);
     }
@@ -114,10 +114,15 @@ public class colisinfo : MonoBehaviour
         leweNowa.transform.localScale = new Vector3(scianka.transform.localScale.x, lewyDistance, scianka.transform.localScale.z);
 
 
-
-        Interacted.Add(praweNowa.name);
-        Interacted.Add(leweNowa.name);
+        AddToList(praweNowa.name, leweNowa.name, EPAL.Interacted);
 
         Destroy(other.gameObject.transform.parent.gameObject);
+    }
+
+
+    public void AddToList(string prawy, string lewy, List<string> Interact)
+    {
+        Interact.Add(prawy);
+        Interact.Add(lewy);
     }
 }
