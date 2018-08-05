@@ -4,6 +4,11 @@ using UnityEngine;
 public class CutTheCube : MonoBehaviour
 {
     private ExtremePointsAndList EPAL;
+    public Vector3 CutPosition;
+    public GameObject praweNowa;
+    public GameObject leweNowa;
+
+
 
     public void Start()
     {
@@ -32,6 +37,7 @@ public class CutTheCube : MonoBehaviour
 
                 //Using only 4 sides
                 Vector3 pos = scianka.transform.position;
+                CutPosition = new Vector3(transform.position.x, pos.y, pos.z);
 
                 if (other.name == scianka.GetComponent<bounds>().x1.name || other.name == scianka.GetComponent<bounds>().x2.name)
                 {
@@ -70,20 +76,14 @@ public class CutTheCube : MonoBehaviour
         Vector3 leftPoint = scianka.position - (Vector3.right * scianka.transform.localScale.x / 2);
         Vector3 rightPoint = scianka.position + (Vector3.right * scianka.transform.localScale.x / 2);
 
-        Vector3 CutPosition = new Vector3(transform.position.x, pos.y, pos.z);
+        SpawnNewCubes(other, rightPoint, leftPoint, scianka);
 
-
-        GameObject praweNowa = Instantiate(other.gameObject.transform.parent.gameObject, new Vector3((rightPoint.x + CutPosition.x)/2, scianka.position.y, scianka.position.z), scianka.rotation);
+        float lewyDistance = (Vector3.Distance(CutPosition, leftPoint));
         float prawyDistance = (Vector3.Distance(CutPosition, rightPoint));
 
-        praweNowa.transform.localScale = new Vector3(prawyDistance, scianka.transform.localScale.y, scianka.transform.localScale.z);
-
-
-
-        GameObject leweNowa = Instantiate(other.gameObject.transform.parent.gameObject, new Vector3((leftPoint.x + CutPosition.x)/2, scianka.position.y, scianka.position.z), scianka.rotation);
-        float lewyDistance = (Vector3.Distance(CutPosition, leftPoint)) ;
-
-        leweNowa.transform.localScale = new Vector3(lewyDistance, scianka.transform.localScale.y, scianka.transform.localScale.z);
+        //zmiana skali
+        praweNowa.transform.localScale = NewScale(prawyDistance, scianka.transform.localScale.y, scianka.transform.localScale.z);
+        leweNowa.transform.localScale = NewScale(lewyDistance, scianka.transform.localScale.y, scianka.transform.localScale.z);
 
 
         AddToList(praweNowa.name, leweNowa.name, EPAL.Interacted);
@@ -98,20 +98,14 @@ public class CutTheCube : MonoBehaviour
         Vector3 leftPoint = scianka.position - (Vector3.right * scianka.transform.localScale.y / 2);
         Vector3 rightPoint = scianka.position + (Vector3.right * scianka.transform.localScale.y / 2);
 
-        Vector3 CutPosition = new Vector3(transform.position.x, pos.y, pos.z);
+        SpawnNewCubes(other, rightPoint, leftPoint, scianka);
 
-
-        GameObject praweNowa = Instantiate(other.gameObject.transform.parent.gameObject, new Vector3((rightPoint.x + CutPosition.x) / 2, scianka.position.y, scianka.position.z), scianka.rotation);
+        float lewyDistance = (Vector3.Distance(CutPosition, leftPoint));
         float prawyDistance = (Vector3.Distance(CutPosition, rightPoint));
 
-        praweNowa.transform.localScale = new Vector3(scianka.transform.localScale.x, prawyDistance, scianka.transform.localScale.z);
-
-
-
-        GameObject leweNowa = Instantiate(other.gameObject.transform.parent.gameObject, new Vector3((leftPoint.x + CutPosition.x) / 2, scianka.position.y, scianka.position.z), scianka.rotation);
-        float lewyDistance = (Vector3.Distance(CutPosition, leftPoint));
-
-        leweNowa.transform.localScale = new Vector3(scianka.transform.localScale.x, lewyDistance, scianka.transform.localScale.z);
+        //zmiana skali
+        praweNowa.transform.localScale = NewScale(scianka.transform.localScale.x, prawyDistance, scianka.transform.localScale.z);
+        leweNowa.transform.localScale = NewScale(scianka.transform.localScale.x, lewyDistance, scianka.transform.localScale.z);
 
 
         AddToList(praweNowa.name, leweNowa.name, EPAL.Interacted);
@@ -124,5 +118,18 @@ public class CutTheCube : MonoBehaviour
     {
         Interact.Add(prawy);
         Interact.Add(lewy);
+    }
+
+    public Vector3 NewScale(float x, float y, float z)
+    {
+        Vector3 Scale = new Vector3(x, y, z);
+
+        return Scale;
+    }
+
+    public void SpawnNewCubes(Collider other, Vector3 rightPoint, Vector3 leftPoint, Transform scianka)
+    {
+        praweNowa = Instantiate(other.gameObject.transform.parent.gameObject, new Vector3((rightPoint.x + CutPosition.x) / 2, scianka.position.y, scianka.position.z), scianka.rotation);
+        leweNowa = Instantiate(other.gameObject.transform.parent.gameObject, new Vector3((leftPoint.x + CutPosition.x) / 2, scianka.position.y, scianka.position.z), scianka.rotation);
     }
 }
